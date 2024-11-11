@@ -82,6 +82,7 @@ bot.on("message", (msg) => {
     if (text.startsWith("http")) {
         bot.sendMessage(chatId, "Đang kiểm tra tình trạng sản phẩm...");
         // Thiết lập kiểm tra định kỳ với khoảng thời gian dài hơn, ví dụ 10 phút (600000 ms)
+        checkProductStatus(text, chatId);
         setInterval(() => {
             checkProductStatus(text, chatId);
         }, 300000); // Mỗi 5 phút
@@ -96,6 +97,7 @@ try {
     if (Array.isArray(savedData)) {
         dataGlobal = savedData;
         dataGlobal.forEach(item => {
+            checkProductStatus(item.url, item.chatId);
             setInterval(() => {
                 checkProductStatus(item.url, item.chatId);
             }, 300000); // Mỗi 5 phút
