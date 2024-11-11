@@ -25,6 +25,8 @@ async function fetchProductDetails(url) {
             body: JSON.stringify({ url: url })
         });
         const data = await response.json();
+        console.log(data);
+        
         if (data.code !== 200 || !data.data) throw new Error("Không lấy được thông tin sản phẩm");
 
         const stock = calculateTotalStock(data.data);
@@ -69,8 +71,10 @@ async function checkProductStatus(url, chatId) {
         } else {
             bot.sendMessage(chatId, `Sản phẩm "${name}" hiện đang hết hàng.`);
         }
+        return true;
     } else {
         console.warn("Không lấy được thông tin sản phẩm.");
+        return false;
     }
 }
 
@@ -82,10 +86,12 @@ bot.on("message", (msg) => {
     if (text.startsWith("http")) {
         bot.sendMessage(chatId, "Đang kiểm tra tình trạng sản phẩm...");
         // Thiết lập kiểm tra định kỳ với khoảng thời gian dài hơn, ví dụ 10 phút (600000 ms)
-        checkProductStatus(text, chatId);
-        setInterval(() => {
-            checkProductStatus(text, chatId);
-        }, 300000); // Mỗi 5 phút
+        const check = checkProductStatus(text, chatId);
+        if (check) {
+            setInterval(() => {
+                checkProductStatus(text, chatId);
+            }, 300000); // Mỗi 5 phút
+        }
     } else {
         bot.sendMessage(chatId, "Vui lòng gửi URL sản phẩm Shopee.");
     }
@@ -97,10 +103,12 @@ try {
     if (Array.isArray(savedData)) {
         dataGlobal = savedData;
         dataGlobal.forEach(item => {
-            checkProductStatus(item.url, item.chatId);
-            setInterval(() => {
-                checkProductStatus(item.url, item.chatId);
+            const check = checkProductStatus(item.url, item.chatId);
+            if (check) {
+                setInterval(() => {
+                    checkProductStatus(item.url, item.chatId);
             }, 300000); // Mỗi 5 phút
+            }
         });
     }
 } catch (error) {
