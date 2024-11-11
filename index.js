@@ -3,7 +3,7 @@ import fs from "fs";
 import TelegramBot from "node-telegram-bot-api";
 
 let dataGlobal = [];
-const TELEGRAM_BOT_TOKEN = '667764269270:AAEsbtWna0B0AEyB0zMZtnptZR2Zqu_HucU';
+const TELEGRAM_BOT_TOKEN = '7764269270:AAEsbtWna0B0AEyB0zMZtnptZR2Zqu_HucU';
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 const APIToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VybmFtZSI6InNhbmcyNzcwIiwiQ29taWQiOm51bGwsIlJvbGVpZCI6bnVsbCwiaXNzIjoidG1hcGkiLCJzdWIiOiJzYW5nMjc3MCIsImF1ZCI6WyIiXSwiaWF0IjoxNzMxMjk0MjM1fQ.cof76I9p0EmqGPJ1wtXt0Y5ryto0I2UYEFX-mLPq0RU'; // Thay bằng token của bạn
 
