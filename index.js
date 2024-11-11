@@ -104,5 +104,12 @@ try {
         });
     }
 } catch (error) {
-    console.error(`Có lỗi khi khởi tạo từ file data.json: ${error}`); 
+    console.error(`Có lỗi khi khởi tạo từ file data.json: ${error}`);
 }
+bot.deleteWebHook()
+    .then(() => {
+        console.log("Webhook deleted successfully.");
+    })
+    .catch((err) => {
+        console.error("Error deleting webhook: ", err);
+    });
